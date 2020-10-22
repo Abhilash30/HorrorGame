@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Models/DieeeeeBucket.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://Materials/TexturesCom_MetalGalvanized0005_S.jpg" type="Texture" id=2]
+[ext_resource path="res://Materials/water-texture-miracle.jpg" type="Texture" id=3]
+
+[sub_resource type="SpatialMaterial" id=1]
+params_diffuse_mode = 1
+albedo_texture = ExtResource( 2 )
+metallic = 0.61
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="ProceduralSky" id=3]
+
+[sub_resource type="Environment" id=4]
+background_mode = 3
+background_sky = SubResource( 3 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "TurnTable"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("CameraPivot:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
+
+[node name="World" type="Spatial"]
+
+[node name="DieeeeeBucket" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = SubResource( 1 )
+material/1 = SubResource( 2 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
+
+[node name="CameraPivot" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="CameraPivot"]
+transform = Transform( 1, 0, 0, 0, 0.773022, 0.63438, 0, -0.63438, 0.773022, 0.0263802, 3.16999, 3.58578 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "TurnTable"
+playback_speed = 0.3
+anims/TurnTable = SubResource( 5 )
